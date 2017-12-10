@@ -19,14 +19,24 @@ public class TresEnRalla {
     static Tablero tablero = new Tablero(new String[3][3]);
     static Player player1 = new Player("player 1");
     static Player player2 = new Player("player 2");
+    static int count = -1;
 
     public static void main(String[] args) {
         // TODO code application logic here
+        Scanner read = new Scanner(System.in);
         boolean acabat = false;
         int entrada;
-        Scanner read = new Scanner(System.in);
+        System.out.println("Introduce el nombre del jugador 1:");
+        player1.setName(read.next());
+        System.out.println("Introduce el nombre del jugador 2:");
+        player2.setName(read.next());
         inicializarTablero();
         while (!acabat) {
+            if (controlarTurno()) {
+                System.out.println("Turno de " + player1.getName());
+            }else{
+               System.out.println("Turno de " + player2.getName()); 
+            }
             imprimirTablero();
             entrada = read.nextInt();
             
@@ -51,5 +61,13 @@ public class TresEnRalla {
                 System.out.print(tablero.getTablero()[i][j] + "   ");
             }
         }
+    }
+    
+    public static boolean controlarTurno(){
+        count++;
+        if (count % 2 == 0) {
+            return true;
+        }
+        return false;
     }
 }
