@@ -21,11 +21,9 @@ public class TresEnRalla {
     static Player player2 = new Player("player 2");
     static int count = -1;
     static Scanner read = new Scanner(System.in);
-
+    static boolean acabat = false; 
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        boolean acabat = false;        
         
         System.out.println("Introduce el nombre del jugador 1:");
         player1.setName(read.next());
@@ -66,8 +64,18 @@ public class TresEnRalla {
             }else{
                 if(controlarTurno()){
                tablero.getTablero()[Integer.parseInt(aux[0])][Integer.parseInt(aux[1])]= "X";
+                    if (checkGanador("X")) {
+                        System.out.println("Ha ganado " + player1.getName());
+                        imprimirTablero();
+                        acabat = true;
+                    }
                 }else{
-                tablero.getTablero()[Integer.parseInt(aux[0])][Integer.parseInt(aux[1])]= "O";
+                tablero.getTablero()[Integer.parseInt(aux[0])][Integer.parseInt(aux[1])]= "0";
+                if (checkGanador("0")) {
+                        System.out.println("Ha ganado " + player2.getName());
+                        imprimirTablero();
+                        acabat = true;
+                    }
                 }
                 return ;
             }
@@ -99,6 +107,36 @@ public class TresEnRalla {
         if (count % 2 == 0) {
             return true;
         }
+        return false;
+    }
+    
+    public static boolean checkGanador(String marca)
+    {
+        //busqueda de ganador por filas
+        for ( int i = 0 ; i < tablero.getTablero().length ; i++ )
+        {
+            byte count=0;
+            for ( int j = 0 ; j < tablero.getTablero().length ; j++)
+                count+=( tablero.getTablero()[i][j].equals(marca) )?1:0;
+            if( count == 3)
+                 return true;
+        }
+        //busqueda de ganador por columnas
+        for ( int j = 0 ; j < tablero.getTablero().length ; j++ )
+        {
+            byte count=0;
+            for ( int i = 0 ; i < tablero.getTablero().length ; i++)
+                count+=( tablero.getTablero()[i][j].equals(marca) )?1:0;
+            if( count == 3)
+                 return true;
+        }
+        //diagonales
+        if(  tablero.getTablero()[0][0].equals(marca) && tablero.getTablero()[1][1].equals(marca) && tablero.getTablero()[2][2].equals(marca) )
+            return true;
+
+        if(  tablero.getTablero()[0][2].equals(marca) && tablero.getTablero()[1][1].equals(marca) && tablero.getTablero()[2][0].equals(marca) )
+            return true;
+
         return false;
     }
 }
