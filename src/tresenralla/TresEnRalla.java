@@ -20,25 +20,27 @@ public class TresEnRalla {
     static Player player1 = new Player("player 1");
     static Player player2 = new Player("player 2");
     static int count = -1;
+    static Scanner read = new Scanner(System.in);
 
     public static void main(String[] args) {
         // TODO code application logic here
-        Scanner read = new Scanner(System.in);
-        boolean acabat = false;
-        int entrada;
+        
+        boolean acabat = false;        
+        
         System.out.println("Introduce el nombre del jugador 1:");
         player1.setName(read.next());
         System.out.println("Introduce el nombre del jugador 2:");
         player2.setName(read.next());
         inicializarTablero();
         while (!acabat) {
+            count++;
             if (controlarTurno()) {
                 System.out.println("Turno de " + player1.getName());
             }else{
                System.out.println("Turno de " + player2.getName()); 
             }
             imprimirTablero();
-            entrada = read.nextInt();
+            colocarCasilla();
             
         }
 
@@ -49,6 +51,35 @@ public class TresEnRalla {
             for (int j = 0; j < tablero.getTablero()[i].length; j++) {
                 tablero.getTablero()[i][j] = String.valueOf(i)+ "," + j;
             }
+        }
+    }
+    public static void colocarCasilla(){
+        String entrada;
+        String [] aux;
+        while(true){
+        try{
+            System.out.println("Introduce las coordenadas (x,y): ");
+            entrada = read.next();
+            aux = entrada.split(",");            
+            if(tablero.getTablero()[Integer.parseInt(aux[0])][Integer.parseInt(aux[1])].equals("X")||tablero.getTablero()[Integer.parseInt(aux[0])][Integer.parseInt(aux[1])].equals("O")){
+                System.out.println("Ya está en uso");
+            }else{
+                if(controlarTurno()){
+               tablero.getTablero()[Integer.parseInt(aux[0])][Integer.parseInt(aux[1])]= "X";
+                }else{
+                tablero.getTablero()[Integer.parseInt(aux[0])][Integer.parseInt(aux[1])]= "O";
+                }
+                return ;
+            }
+            
+            }catch(NumberFormatException e){
+                System.out.println("Formato incorrecto ");
+            }
+            
+            catch(IndexOutOfBoundsException e){
+                System.out.println("Coordenadas incorrectas");
+            }
+        
         }
     }
 
@@ -64,7 +95,7 @@ public class TresEnRalla {
     }
     
     public static boolean controlarTurno(){
-        count++;
+        
         if (count % 2 == 0) {
             return true;
         }
