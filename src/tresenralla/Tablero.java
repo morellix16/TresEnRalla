@@ -14,4 +14,18 @@ public class Tablero {
     
     
     private String[] [] tablero;
+
+    public Tablero(String[][] tablero) {
+        this.tablero = tablero;
+    }
+
+    public String[][] getTablero() {
+        return tablero;
+    }
+
+    public void setTablero(String[][] tablero) {
+        this.tablero = tablero;
+    }
+    
+    
 }
