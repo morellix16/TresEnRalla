@@ -16,6 +16,12 @@ public class TresEnRalla {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        Player player1 = new Player("player 1");
+        Player player2 = new Player("player 2");
+        
+        Tablero tablero = new Tablero(new String [3][3]);
+        
     }
     
 }
